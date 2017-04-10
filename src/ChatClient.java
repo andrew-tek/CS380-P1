@@ -17,20 +17,22 @@ public class ChatClient {
             Scanner sc = new Scanner (System.in);
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             Runnable messageReceiver = () -> {
-            	while (true) {
+            	
 	            	try {
-	            		System.out.println(br.readLine());
+	            		System.out.println("Server: " + br.readLine());
 	            	}
-	            	catch (Exception e){}
+	            	catch (Exception e){
+	            		System.out.println("Nothing to read...");
 	            	}
+	            	
             };
             Thread messages = new Thread (messageReceiver);
             messages.start();
-            System.out.print("Client> ");
+            System.out.print("Me> ");
             String userInput = sc.nextLine();
             while(!userInput.equals("exit")) {
              out.println(userInput);
-             System.out.println(br.readLine());
+             System.out.print("Me> ");
              userInput = sc.nextLine();
             }
            
