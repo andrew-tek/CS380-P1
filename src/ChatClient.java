@@ -1,3 +1,7 @@
+//Andrew Tek
+//CS 380
+//4/11/17
+
 import java.io.InputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,22 +21,25 @@ public class ChatClient {
             Scanner sc = new Scanner (System.in);
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             Runnable messageReceiver = () -> {
-            	
+            	String message;
+            	while (true) {
 	            	try {
-	            		System.out.println("Server: " + br.readLine());
+	            		message = br.readLine();
+	            		if (message != null) {
+	            			System.out.println("Server:" + message);
+	            		}
 	            	}
 	            	catch (Exception e){
-	            		System.out.println("Nothing to read...");
+	            		System.out.println(e);
 	            	}
+            	}
 	            	
             };
             Thread messages = new Thread (messageReceiver);
             messages.start();
-            System.out.print("Me> ");
             String userInput = sc.nextLine();
             while(!userInput.equals("exit")) {
              out.println(userInput);
-             System.out.print("Me> ");
              userInput = sc.nextLine();
             }
            
